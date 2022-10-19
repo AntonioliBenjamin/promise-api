@@ -12,12 +12,17 @@ const foodList = axios.get(`${foodApiUrl}/learning-area/javascript/apis/fetching
 function getUserInfosWithThen() {   
     let title = userApi.then(response => {
         console.log(response.data.results[0].name.title)
-            let firstName = userApi.then(response => {
+            userApi.then(response => {
                 console.log(response.data.results[0].name.first)
-                    let lastName = userApi.then(response => {
+                    userApi.then(response => {
                         console.log(response.data.results[0].name.last)
-                            let food = foodList.then(response => {
-                                console.log(response.data)
+                            foodList.then(response => {
+                                const obj = response.data;
+                                const foodArr = []
+                                    for (let i =0; i < obj.length; i++) {    
+                                        foodArr.push(obj[i].name);
+                                    }  
+                                    console.log (foodArr)
                                 
                             })
                     })
@@ -26,16 +31,20 @@ function getUserInfosWithThen() {
 
 }
 
-
 async function getUserInfosWithAsyncAwait() {
-    const AwaituserApi = await userApi
-    const AwaitfoodList = await foodList
-    console.log(AwaituserApi.data.results[0].name.title + " " + AwaituserApi.data.results[0].name.first + " " + AwaituserApi.data.results[0].name.last);
-    console.log(AwaitfoodList.data)
-}
+    const awaituserApi = await userApi
+    const awaitfoodList = await foodList
+    console.log(awaituserApi.data.results[0].name.title + " " + awaituserApi.data.results[0].name.first + " " + awaituserApi.data.results[0].name.last);
 
+    const obj = awaitfoodList.data;
+    const foodArr = []
+    for (let i =0; i < obj.length; i++) {    
+        foodArr.push(obj[i].name);
+     }  
+   console.log (foodArr)
+}
 
 (async () => {
     getUserInfosWithAsyncAwait();
-    //getUserInfosWithThen()
+    //getUserInfosWithThen();
 })();
