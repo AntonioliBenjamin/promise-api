@@ -10,15 +10,17 @@ const foodList = axios.get(`${foodApiUrl}/learning-area/javascript/apis/fetching
 
 // todo transform this in a new async await function.
 function getUserInfosWithThen() {   
-    let title = userApi.then(response => {
+    userApi.then(response => {
         console.log(response.data.results[0].name.title)
-            let firstName = userApi.then(response => {
+            userApi.then(response => {
                 console.log(response.data.results[0].name.first)
-                    let lastName = userApi.then(response => {
+                    userApi.then(response => {
                         console.log(response.data.results[0].name.last)
-                            let food = foodList.then(response => {
-                                console.log(response.data)
-                                
+                            foodList.then(response => {
+                                const foodArr = response.data.map(item => {
+                                    return item.name;     
+                                   })
+                                console.log(foodArr)             
                             })
                     })
             })
@@ -26,17 +28,18 @@ function getUserInfosWithThen() {
 
 }
 
-
 async function getUserInfosWithAsyncAwait() {
-    const AwaituserApi = await userApi
-    const AwaitfoodList = await foodList
-    console.log(AwaituserApi.data.results[0].name.title + " " + AwaituserApi.data.results[0].name.first + " " + AwaituserApi.data.results[0].name.last);
-    console.log(AwaitfoodList.data)
-}
+    const awaituserApi = await axios.get(`${userApiUrl}/api/`);
+    const awaitfoodList = await axios.get(`${foodApiUrl}/learning-area/javascript/apis/fetching-data/can-store/products.json`);
+    console.log(awaituserApi.data.results[0].name.title + " " + awaituserApi.data.results[0].name.first + " " + awaituserApi.data.results[0].name.last);
 
+    const foodArr = awaitfoodList.data.map(item => {
+        return item.name;
+    })
+    console.log(foodArr)
+}
 
 (async () => {
     getUserInfosWithAsyncAwait();
-    //getUserInfosWithThen()
+    getUserInfosWithThen();
 })();
-
