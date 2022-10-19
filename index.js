@@ -28,14 +28,14 @@ function getUserInfosWithThen() {
 
 
 async function getUserInfosWithAsyncAwait() {
-    const AwaituserApi = await axios.get(`${userApiUrl}/api/`);
-    const AwaitfoodList = await axios.get(`${foodApiUrl}/learning-area/javascript/apis/fetching-data/can-store/products.json`);
+    const AwaituserApi = await userApi
+    const AwaitfoodList = await foodList
     console.log(AwaituserApi.data.results[0].name.title + " " + AwaituserApi.data.results[0].name.first + " " + AwaituserApi.data.results[0].name.last);
     console.log(AwaitfoodList.data)
 }
 
 
 (async () => {
-    //getUserInfosWithAsyncAwait();
-    getUserInfosWithThen()
+    getUserInfosWithAsyncAwait();
+    //getUserInfosWithThen()
 })();
